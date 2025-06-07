@@ -1,6 +1,5 @@
 ## Link simulator
-リンク機構の運動解析およびアニメーションを行う MATLAB 用シミュレータです・
-
+リンク機構の運動解析およびアニメーションを行う MATLAB 用シミュレータです．
 ## 構成
 ```
 link_simulator/
@@ -14,7 +13,7 @@ link_simulator/
 
 ## 使い方
 1. 入力用ファイルの作成
-   - `\docs\input_file.md`を参照して作成すること．
+   - `\docs\入力データ作成例.xlsx`または`\docs\入力データ作成例.pdf`を参照して作成すること．
 2. 解析スクリプトの実行
    - `\MATLAB\scripts\auto_analysis.m`を実行．
 3. シミュレーションの実行，結果の確認
