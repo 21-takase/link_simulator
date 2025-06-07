@@ -4,7 +4,7 @@ close all
 addpath(fullfile(fileparts(mfilename('fullpath')), '..', 'src'));
 
 %時間
-dt=0.001;
+dt=0.005;
 t=0:dt:5;
 sz = size(t);
 
@@ -107,3 +107,21 @@ for k = 2:length(t)
     drawnow limitrate
 end
 drawnow
+
+% リンク先端のx, yを時間に対してプロット
+figure;
+subplot(2,1,1);
+set(gca, 'FontSize', 18);
+plot(t, J(n).x, 'LineWidth', 1.5);
+xlabel('Time [s]');
+ylabel('X position');
+title(sprintf('Joint %d X Position over Time', n));
+grid on;
+
+subplot(2,1,2);
+set(gca, 'FontSize', 18);
+plot(t, J(n).y, 'LineWidth', 1.5);
+xlabel('Time [s]');
+ylabel('Y position');
+title(sprintf('Joint %d Y Position over Time', n));
+grid on;
