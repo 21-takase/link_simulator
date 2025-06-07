@@ -1,8 +1,7 @@
-%おまじない
 clc
 clear variables
 close all
-addpath("subfunctions\")
+addpath(fullfile(fileparts(mfilename('fullpath')), '..', 'src'));
 
 %時間
 dt=0.001;
@@ -13,17 +12,20 @@ sz = size(t);
 theta = 2*pi*t;
 
 %解析データの読み込み
-filename_link = "data1.csv";%データ名が決まっている場合入力
+filename_link = "theo_jansen.csv";%データ名が決まっている場合入力
 if filename_link == ""
     filename_link = input("入力ファイルの名前:","s");
 end
 
+data_folder = fullfile(fileparts(mfilename('fullpath')), '..', 'data');
 filename_analysis = "result_"+filename_link;
+fullpath_anlaysis = fullfile(data_folder, filename_analysis);
+fullpath_data = fullfile(data_folder, filename_link);
 
-analysis_arr = readtable(filename_analysis);
+analysis_arr = readtable(fullpath_anlaysis);
 analysis_arr.Analysis_Method = string(analysis_arr.Analysis_Method);
 [n,~] = size(analysis_arr);
-data = readmatrix(filename_link);
+data = readmatrix(fullpath_data);
 linkdata = data(n+2:end,1:3);
 G = MakeAdjacencyMat(linkdata,n);
 barset = linkdata(:,1:2);

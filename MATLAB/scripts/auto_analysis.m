@@ -1,17 +1,17 @@
 %% 準備------------------------------------------------------
-%おまじない
 clc
 clear variables
 close all
-addpath("subfunctions\")
+addpath(fullfile(fileparts(mfilename('fullpath')), '..', 'src'));
 
 %データの読み込み
-filename_analysis = "";%データ名が決まっている場合入力
+filename_analysis = "theo_jansen";%データ名が決まっている場合入力
 if filename_analysis == ""
-    filename_analysis = input("入力ファイルの名前:","s");
+    filename_analysis = input("Input filename:","s");
 end
-
-data  =readmatrix(filename_analysis);
+data_folder = fullfile(fileparts(mfilename('fullpath')), '..', 'data');
+fullpath = fullfile(data_folder, filename_analysis);
+data  =readmatrix(fullpath);
 data(isnan(data)) = 0;%NaNを0に置き換え
 n = data(1,1);                  %ジョイントの数
 data_joint = data(2:n+1,:);     %ジョイントの情報(固定位置x,固定位置y，固定か？，原動節か？)
@@ -114,9 +114,7 @@ candidacy = zeros(candidacy_max,m);   %候補を格納する配列
 %ある順番jの点の位置が定まったときにすでに定義されているリンクの集合を作っておく
 link_j = cell(barnum,maxstep+1);   
 link_j_new = cell(barnum,maxstep);%ある順番jの点の位置が定まったときに初めて定義できるリンクの集合,最終列はdummy
-%交差チェックはlink_j内のとlink_j_new内のを調べればOK
 
-%ここら辺絶対もっとキレイにかけるけどとりあえずよしとする
 for j=2:maxstep+1
     rj = 1;%link_jに書き込む行番号
     rjn = 1;
@@ -240,7 +238,8 @@ result = sortrows(result_for_search,1);
 %% 結果の表示-------------------------------------------------------
 disp("解析手順の結果:")
 disp(result)
-filename_write = "result_" + filename_analysis;
-writetable(result,filename_write);
-dispstr = sprintf("解析手順の結果を「%s」に保存しました",filename_write);
+filename_write = "result_" + filename_analysis + ".csv";
+fullpath_result = fullfile(data_folder, filename_write);
+writetable(result,fullpath_result);
+dispstr = sprintf("解析手順の結果を「%s」に保存しました",fullpath_result);
 disp(dispstr)
